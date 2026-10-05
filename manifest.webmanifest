@@ -1,0 +1,26 @@
+{
+  "name": "Lustra — Hair Color Studio",
+  "short_name": "Lustra",
+  "description": "Try any hair color live on your camera or photo. Free, private, and runs entirely in your browser with zero data upload.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "categories": ["lifestyle", "photo", "beauty"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

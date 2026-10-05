@@ -4,16 +4,63 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#000000" />
-<meta name="description" content="Lustra is a free, private hair color studio. Try solid, ombré, highlighted and fantasy shades live on your camera or on a photo. Nothing is uploaded." />
-<meta property="og:title" content="Lustra — Hair Color Studio" />
-<meta property="og:description" content="Try any hair color live on your camera. Free, private, and runs entirely in your browser." />
-<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>Lustra - Live AI Hair Color Studio</title>
+
+<!-- Standard SEO & Discovery -->
+<meta name="title" content="Lustra - Live AI Hair Color Studio" />
+<meta name="description" content="Try on realistic hair colors live on your camera or on a photo. Solid shades, ombre, and fantasy colors. 100% free, private, and runs directly in your browser." />
+<meta name="keywords" content="hair color studio, virtual hair try on, hair dye simulator, augmented reality hair, ombre hair, solid hair color, web ar hair, mediapipe hair segmentation" />
+<meta name="author" content="Lustra" />
+<link rel="canonical" href="https://r2dapps.github.io/lustrahairstudio/" />
+
+<!-- Open Graph / Facebook / WhatsApp / LinkedIn / Discord -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://r2dapps.github.io/lustrahairstudio/" />
+<meta property="og:title" content="Lustra - Live AI Hair Color Studio" />
+<meta property="og:description" content="Try on any hair color live on your camera or photo. Free, private, and runs entirely in your browser with zero data upload." />
+<meta property="og:image" content="https://r2dapps.github.io/lustrahairstudio/og-image.png" />
+<meta property="og:image:secure_url" content="https://r2dapps.github.io/lustrahairstudio/og-image.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Lustra Hair Color Studio - Live Camera Try-On" />
+<meta property="og:site_name" content="Lustra" />
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content="https://r2dapps.github.io/lustrahairstudio/" />
+<meta name="twitter:title" content="Lustra - Live AI Hair Color Studio" />
+<meta name="twitter:description" content="Try on any hair color live on your camera or photo. Free, private, on-device AR." />
+<meta name="twitter:image" content="https://r2dapps.github.io/lustrahairstudio/og-image.png" />
+
+<!-- Progressive Web App (PWA) -->
+<link rel="manifest" href="manifest.webmanifest" />
 <meta name="mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-title" content="Lustra" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<title>Lustra — Hair Color Studio</title>
-<link rel="icon" id="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff3d81'/%3E%3Cstop offset='.5' stop-color='%2319d3ff'/%3E%3Cstop offset='1' stop-color='%23a259ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='url(%23g)' stroke-width='14'/%3E%3C/svg%3E" />
-<link rel="apple-touch-icon" id="touchIcon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff3d81'/%3E%3Cstop offset='.5' stop-color='%2319d3ff'/%3E%3Cstop offset='1' stop-color='%23a259ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='url(%23g)' stroke-width='14'/%3E%3C/svg%3E" />
+<meta name="apple-mobile-web-app-title" content="Lustra" />
+<link rel="apple-touch-icon" href="icon.svg" />
+<link rel="icon" id="icon" href="icon.svg" type="image/svg+xml" />
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Lustra - Hair Color Studio",
+  "url": "https://r2dapps.github.io/lustrahairstudio/",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires WebGL and Camera access for live preview",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Try on realistic hair colors live on camera or photo with instant on-device AI segmentation."
+}
+</script>
+
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="preconnect" href="https://storage.googleapis.com" crossorigin />
 <style>
@@ -27,7 +74,7 @@
   #app{position:fixed;inset:0;display:flex;flex-direction:column}
   .stage{position:relative;flex:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;
     background:radial-gradient(circle at 50% 40%,#1b1b22,#000 70%)}
-  .frame{position:relative;flex:none;width:0;height:0;--x:50%;max-width:100%;max-height:100%}
+  .frame{position:relative;flex:none;width:0;height:0;--x:50%}
   canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
   .top{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;
@@ -74,7 +121,7 @@
   .name{font-weight:700;font-size:15px;letter-spacing:.04em;height:20px;display:flex;align-items:center;gap:8px}
   .chips{display:flex;gap:8px;max-width:100%;overflow-x:auto;padding:0 14px;scrollbar-width:none}
   .chips::-webkit-scrollbar,.car::-webkit-scrollbar{display:none}
-  .chip{padding:7px 14px;border-radius:99px;background:#fff1;border:1px solid #fff2;font-size:13px;font-weight:600;white-space:nowrap}
+  .chip{padding:7px 16px;border-radius:99px;background:#fff1;border:1px solid #fff2;font-size:13px;font-weight:600;white-space:nowrap;transition:.15s}
   .chip.on{background:#fff;color:#000}
   .vib{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fffb;width:min(320px,80%)}
   input[type=range]{flex:1;accent-color:#fff;height:24px}
@@ -172,26 +219,14 @@
 import { ImageSegmenter, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.32/vision_bundle.mjs";
 const WASM = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.32/wasm";
 const MODEL = "https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/latest/selfie_multiclass_256x256.tflite";
-const FEEDBACK_URL = "";   // Paste a Google Form or mailto: link here to show a feedback link on the start screen.
-const coarse = matchMedia("(pointer:coarse)").matches;        // phones and tablets
-const CAM_MAX = coarse ? 640 : 960, IMG_MAX = 1600;
+const FEEDBACK_URL = "";
+const coarse = matchMedia("(pointer:coarse)").matches;
+// Ultra-smooth 60fps streaming resolution
+const CAM_MAX = coarse ? 480 : 640, IMG_MAX = 1600;
 const $ = id => document.getElementById(id);
 
-/* ---------- favicon (same ring as the logo) ---------- */
-function icon(size, bg) {
-  const c = document.createElement("canvas"); c.width = c.height = size;
-  const x = c.getContext("2d"), m = size / 2;
-  if (bg) { x.fillStyle = bg; x.fillRect(0, 0, size, size); }
-  const g = x.createConicGradient ? x.createConicGradient(-Math.PI / 2, m, m) : x.createLinearGradient(0, 0, size, size);
-  ["#ff3d81", "#ffb347", "#4cd964", "#19d3ff", "#a259ff", "#ff3d81"].forEach((col, i, a) => g.addColorStop(i / (a.length - 1), col));
-  x.strokeStyle = g; x.lineWidth = size * .22; x.beginPath(); x.arc(m, m, size * .38, 0, Math.PI * 2); x.stroke();
-  return c.toDataURL("image/png");
-}
-$("icon").href = icon(64); $("icon").type = "image/png";
-$("touchIcon").href = icon(180, "#000");
-
-/* ---------- looks ---------- */
-const STYLES = { solid: "Solid", ombre: "Ombré", streaks: "Highlights", split: "Two-tone" };
+/* ---------- looks (Solid & Ombré Only) ---------- */
+const STYLES = { solid: "Solid", ombre: "Ombré" };
 const LOOKS = [
   { n: "Original", s: null },
   { n: "Jet Black", s: ["#0a0a0c"], st: "solid" },
@@ -203,13 +238,13 @@ const LOOKS = [
   { n: "Honey Blonde", s: ["#6b4423", "#d9a441", "#f0cf85"], st: "ombre" },
   { n: "Copper", s: ["#a8441f", "#e38a4d"], st: "ombre" },
   { n: "Sunset", s: ["#ff3d2e", "#ff9a3c", "#ffd166"], st: "ombre" },
-  { n: "Cotton Candy", s: ["#ff9ed8", "#9ad7ff"], st: "split" },
-  { n: "Mermaid", s: ["#00c2a8", "#3a7bd5", "#8e44ad"], st: "streaks" },
+  { n: "Cotton Candy", s: ["#ff9ed8", "#9ad7ff"], st: "ombre" },
+  { n: "Mermaid", s: ["#00c2a8", "#3a7bd5", "#8e44ad"], st: "ombre" },
   { n: "Violet Haze", s: ["#2a0a5e", "#9b4dff"], st: "ombre" },
   { n: "Cyber Blue", s: ["#0066ff", "#00f0ff"], st: "ombre" },
   { n: "Emerald", s: ["#169b62"], st: "solid" },
   { n: "Galaxy", s: ["#12063a", "#5b2bd6", "#19d3ff"], st: "ombre" },
-  { n: "Rainbow", s: ["#ff3b30", "#ff9f0a", "#ffd60a", "#30d158", "#0a84ff", "#bf5af2"], st: "streaks" },
+  { n: "Rainbow", s: ["#ff3b30", "#ff9f0a", "#ffd60a", "#30d158", "#0a84ff", "#bf5af2"], st: "ombre" },
   { n: "Platinum", s: ["#d5dae4"], st: "solid" },
   { n: "Silver", s: ["#b9c0cc"], st: "solid" },
   { n: "Snow White", s: ["#f5f7fb"], st: "solid" },
@@ -223,9 +258,10 @@ const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
 /* ---------- state ---------- */
 let seg = null, segMode = "VIDEO", mode = null, facing = "user", mirror = true, stream = null, busy = false;
-let animId = null, lastSegTime = 0;
+let animId = null, lastSegTime = 0, isInferring = false;
+
 const START = LOOKS.findIndex(l => l.n === "Rose Gold");
-let look = LOOKS[START], style = look.st, vib = .85, compare = false, split = .5;
+let look = LOOKS[START], style = look.st || "ombre", vib = .85, compare = false, split = .5;
 let W = 0, H = 0, dyed = false, hairImg = null, prev = null, lastT = -1;
 let bb = { x0: 0, y0: 0, x1: 1, y1: 1, ok: false };
 
@@ -243,39 +279,31 @@ function setSize(w, h) {
   prev = null; bb.ok = false; fit();
 }
 
-/* Fix camera zoom bug: fit camera/photo completely inside stage so full hair is visible without crop/zoom */
+/* Normal camera view: 100% natural, unzoomed, uncropped view */
 function fit() {
   if (!W || !H) return;
   const r = stage.getBoundingClientRect();
   if (!r.width || !r.height) return;
+
   const k = Math.min(r.width / W, r.height / H);
   frame.style.width = Math.round(W * k) + "px";
   frame.style.height = Math.round(H * k) + "px";
 }
-addEventListener("resize", fit);
 
-/* ---------- dye engine ---------- */
+addEventListener("resize", fit);
+screen.orientation?.addEventListener("change", () => {
+  setTimeout(() => {
+    if (mode === "camera") startCam();
+    else fit();
+  }, 250);
+});
+
+/* ---------- dye engine (Solid & Ombré) ---------- */
 function makeFill(c, st, b) {
   const n = st.length;
   if (style === "solid") return st[n >> 1];
-  if (style === "ombre") {
-    const g = c.createLinearGradient(0, b.y0, 0, b.y1 + 1);
-    st.forEach((col, i) => g.addColorStop(i / (n - 1), col));
-    return g;
-  }
-  const g = c.createLinearGradient(b.x0, 0, b.x1 + 1, 0);
-  if (style === "split") {
-    // When mirrored (front camera), invert stops so left/right colors match physical orientation and saved photo
-    const leftCol = mirror ? st[n - 1] : st[0];
-    const rightCol = mirror ? st[0] : st[n - 1];
-    g.addColorStop(0, leftCol);
-    g.addColorStop(.499, leftCol);
-    g.addColorStop(.501, rightCol);
-    g.addColorStop(1, rightCol);
-  } else {
-    const B = 18;
-    for (let k = 0; k < B; k++) { const col = st[k % n]; g.addColorStop(k / B, col); g.addColorStop((k + 1) / B - .001, col); }
-  }
+  const g = c.createLinearGradient(0, b.y0, 0, b.y1 + 1);
+  st.forEach((col, i) => g.addColorStop(i / (n - 1), col));
   return g;
 }
 
@@ -283,16 +311,20 @@ function dye(hair, smooth) {
   if (hair.length !== W * H) return;
   const d = maskImg.data;
   let x0 = W, x1 = 0, y0 = H, y1 = 0;
+  let x = 0, y = 0;
+
   for (let i = 0, p = 3; i < hair.length; i++, p += 4) {
     const c = hair[i];
     let a = 0;
-    if (c > .25) { const t = Math.min(1, (c - .25) / .4); a = t * t * (3 - 2 * t) * 255; }
-    d[p] = a;
-    if (c > .5) {
-      const y = (i / W) | 0, x = i - y * W;
+    if (c > 0.25) {
+      const t = Math.min(1, (c - 0.25) * 2.5);
+      a = (t * t * (3 - 2 * t) * 255) | 0;
       if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
     }
+    d[p] = a;
+    if (++x >= W) { x = 0; y++; }
   }
+
   if (x1 <= x0 || y1 <= y0) { dyed = false; return; }
   const k = smooth && bb.ok ? .3 : 1, e = bb.ok;
   bb = { x0: e ? bb.x0 + (x0 - bb.x0) * k : x0, x1: e ? bb.x1 + (x1 - bb.x1) * k : x1,
@@ -308,14 +340,14 @@ function dye(hair, smooth) {
   lx.drawImage(maskC, 0, 0);
 
   const avg = st.reduce((s, c) => s + lum(c), 0) / st.length;
-  const lift = clamp((avg - .3) * .9, 0, .6);   // lightens dark hair for pale shades
-  const dark = clamp((.35 - avg) * 2.4, 0, .8); // darkens gray or light hair for deep shades
+  const lift = clamp((avg - .3) * .9, 0, .6);
+  const dark = clamp((.35 - avg) * 2.4, 0, .8);
+
   wx.globalCompositeOperation = "source-over"; wx.globalAlpha = 1; wx.filter = "none";
   wx.drawImage(srcC, 0, 0);
-  if (!coarse) wx.filter = "blur(1px)";
-  wx.globalCompositeOperation = "color"; wx.globalAlpha = vib;            // dye hue and saturation, keeps strand shading
+  wx.globalCompositeOperation = "color"; wx.globalAlpha = vib;
   wx.drawImage(layC, 0, 0);
-  wx.globalCompositeOperation = "soft-light"; wx.globalAlpha = vib * .7;  // richness and depth
+  wx.globalCompositeOperation = "soft-light"; wx.globalAlpha = vib * .7;
   wx.drawImage(layC, 0, 0);
   if (lift > 0) { wx.globalCompositeOperation = "screen"; wx.globalAlpha = vib * lift; wx.drawImage(layC, 0, 0); }
   if (dark > 0) { wx.globalCompositeOperation = "multiply"; wx.globalAlpha = vib * dark; wx.drawImage(layC, 0, 0); }
@@ -350,6 +382,7 @@ function stopCam() {
     stream = null;
   }
   video.srcObject = null;
+  isInferring = false;
 }
 async function setSeg(m) { if (segMode !== m) { await seg.setOptions({ runningMode: m }); segMode = m; } }
 
@@ -357,7 +390,10 @@ function ui() {
   const cam = mode === "camera", photo = mode === "photo";
   document.body.classList.toggle("ready", !!mode);
   $("welcome").hidden = !!mode;
-  $("flipBtn").hidden = !cam; $("backBtn").hidden = !photo; $("saveBtn").hidden = !photo; $("cmpBtn").hidden = !mode;
+  $("flipBtn").hidden = !cam;
+  $("backBtn").hidden = !photo;
+  $("saveBtn").hidden = !photo;
+  $("cmpBtn").hidden = !mode;
   $("shutterBtn").hidden = !cam;
   $("hint").textContent = photo ? "Try other shades, drag the slider to compare, then tap the download icon to save."
     : "Choose a shade and tap the shutter button to capture";
@@ -369,13 +405,19 @@ async function startCam() {
   busy = true;
   try {
     stopCam();
-    const portrait = innerHeight > innerWidth;
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: { ideal: facing }, width: { ideal: portrait ? 720 : 1280 }, height: { ideal: portrait ? 1280 : 720 } }, audio: false });
+    // Request clean, native camera feed without forced aspect ratio distortion
+    const constraints = {
+      video: {
+        facingMode: { ideal: facing }
+      },
+      audio: false
+    };
+
+    stream = await navigator.mediaDevices.getUserMedia(constraints);
     video.srcObject = stream;
     await video.play();
     await setSeg("VIDEO");
-    mode = "camera"; mirror = facing === "user"; hairImg = null; dyed = false; lastT = -1; lastSegTime = 0;
+    mode = "camera"; mirror = facing === "user"; hairImg = null; dyed = false; lastT = -1; lastSegTime = 0; isInferring = false;
     compare = false; $("cmp").classList.remove("on"); $("cmpBtn").classList.remove("on");
     ui();
     if (animId) cancelAnimationFrame(animId);
@@ -395,28 +437,37 @@ function loop() {
   animId = requestAnimationFrame(loop);
   if (video.readyState < 2 || video.currentTime === lastT || !video.videoWidth) return;
   lastT = video.currentTime;
+
   const sc = Math.min(1, CAM_MAX / Math.max(video.videoWidth, video.videoHeight));
   setSize(Math.round(video.videoWidth * sc), Math.round(video.videoHeight * sc));
   sx.drawImage(video, 0, 0, W, H);
-  dyed = false;
-  if (look.s && seg) {
-    // MediaPipe requires strictly increasing timestamps
+
+  // Asynchronous inference throttling for smooth 60fps rendering without lag
+  if (look.s && seg && !isInferring) {
+    isInferring = true;
     const now = performance.now();
     const ts = Math.max(lastSegTime + 1, now);
     lastSegTime = ts;
     try {
       seg.segmentForVideo(srcC, ts, r => {
-        const m = r.confidenceMasks && r.confidenceMasks[1];
-        if (!m) return;
-        const a = m.getAsFloat32Array();
-        if (!prev || prev.length !== a.length) prev = new Float32Array(a);
-        else for (let i = 0; i < a.length; i++) prev[i] += (a[i] - prev[i]) * .5;
-        dye(prev, true);
+        try {
+          const m = r.confidenceMasks && r.confidenceMasks[1];
+          if (m) {
+            const a = m.getAsFloat32Array();
+            if (!prev || prev.length !== a.length) prev = new Float32Array(a);
+            else for (let i = 0; i < a.length; i++) prev[i] += (a[i] - prev[i]) * .4;
+            dye(prev, true);
+          }
+        } finally {
+          isInferring = false;
+        }
       });
     } catch (err) {
+      isInferring = false;
       console.warn("segmentForVideo warning:", err);
     }
   }
+
   present();
 }
 
@@ -433,7 +484,6 @@ async function analyse() {
     const m = r.confidenceMasks && r.confidenceMasks[1];
     if (m) hairImg = new Float32Array(m.getAsFloat32Array());
   });
-  // Hair dye triggers starting at c > 0.25; check if meaningful hair pixels exist
   let hairCount = 0;
   if (hairImg) {
     for (let i = 0; i < hairImg.length; i++) {
@@ -566,7 +616,7 @@ colorInput.addEventListener("input", e => {
 const center = (i, smooth) => car.scrollTo({ left: items[i].offsetLeft + items[i].offsetWidth / 2 - car.clientWidth / 2, behavior: smooth ? "smooth" : "auto" });
 function pick(i) {
   look = LOOKS[i];
-  if (look.s) style = look.st;
+  if (look.s && look.st) style = look.st;
   items.forEach((b, k) => b.classList.toggle("on", k === i));
   $("name").textContent = look.custom ? "Custom Shade" : look.n;
   renderChips(); repaint(); syncHash();
@@ -677,6 +727,13 @@ try {
 const initialIndex = LOOKS.indexOf(look) !== -1 ? LOOKS.indexOf(look) : START;
 pick(initialIndex); ui(); requestAnimationFrame(() => center(initialIndex, false));
 
+/* ---------- PWA Service Worker Registration ---------- */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(e => console.warn("SW register:", e));
+  });
+}
+
 /* ---------- model ---------- */
 let vision;
 const create = async delegate => ImageSegmenter.createFromOptions(await vision, {
@@ -687,7 +744,7 @@ const create = async delegate => ImageSegmenter.createFromOptions(await vision, 
     vision = FilesetResolver.forVisionTasks(WASM);
     try { seg = await create("GPU"); } catch (e) { console.warn("GPU unavailable, using CPU", e); seg = await create("CPU"); }
     $("ld").hidden = true; $("camBtn").disabled = $("upBtn").disabled = false;
-    try {   // returning visitors who already allowed the camera go straight to it
+    try {
       const p = await navigator.permissions.query({ name: "camera" });
       if (p.state === "granted") startCam();
     } catch {}
