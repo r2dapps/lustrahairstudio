@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <title>Lustra — Hair Color Studio</title>
 <link rel="icon" id="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff3d81'/%3E%3Cstop offset='.5' stop-color='%2319d3ff'/%3E%3Cstop offset='1' stop-color='%23a259ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='url(%23g)' stroke-width='14'/%3E%3C/svg%3E" />
-<link rel="apple-touch-icon" id="touchIcon" href="" />
+<link rel="apple-touch-icon" id="touchIcon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff3d81'/%3E%3Cstop offset='.5' stop-color='%2319d3ff'/%3E%3Cstop offset='1' stop-color='%23a259ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='url(%23g)' stroke-width='14'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="preconnect" href="https://storage.googleapis.com" crossorigin />
 <style>
@@ -27,12 +27,12 @@
   #app{position:fixed;inset:0;display:flex;flex-direction:column}
   .stage{position:relative;flex:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;
     background:radial-gradient(circle at 50% 40%,#1b1b22,#000 70%)}
-  .frame{position:relative;flex:none;width:0;height:0;--x:50%}
+  .frame{position:relative;flex:none;width:0;height:0;--x:50%;max-width:100%;max-height:100%}
   canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
   .top{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;
     padding:max(12px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 12px max(14px,env(safe-area-inset-left));
-    background:linear-gradient(#000a,transparent);pointer-events:none}
+    background:linear-gradient(#000b,transparent);pointer-events:none}
   .top>*{pointer-events:auto}
   .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em;font-size:20px}
   .logo{width:28px;height:28px;border-radius:50%;background:conic-gradient(from 0deg,#ff3d81,#ffb347,#4cd964,#19d3ff,#a259ff,#ff3d81);
@@ -50,8 +50,9 @@
   .knob{position:absolute;top:50%;left:var(--x);width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#fff;color:#000;
     display:grid;place-items:center;box-shadow:0 2px 14px #0008}
   .knob svg{width:22px;height:22px}
-  .tag{position:absolute;top:72px;padding:5px 12px;border-radius:99px;background:#000a;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
-  .tag.l{left:12px}.tag.r{right:12px}
+  .tag{position:absolute;bottom:20px;padding:6px 14px;border-radius:99px;background:#000c;backdrop-filter:blur(8px);
+    font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:1px solid #fff2;box-shadow:0 2px 10px #0008}
+  .tag.l{left:16px}.tag.r{right:16px}
 
   .welcome{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
     text-align:center;padding:24px 24px 230px}
@@ -67,31 +68,51 @@
   .fine{font-size:12px;color:#fff7}
   .fine a{color:#fffb}
 
-  .dock{position:absolute;left:0;right:0;bottom:0;z-index:10;padding:36px 0 max(10px,env(safe-area-inset-bottom));
+  .dock{position:absolute;left:0;right:0;bottom:0;z-index:10;padding:28px 0 max(12px,env(safe-area-inset-bottom));
     background:linear-gradient(transparent,#000c 45%);display:flex;flex-direction:column;align-items:center;gap:10px;transition:opacity .3s}
   body:not(.ready) .dock{opacity:.35;pointer-events:none}
-  .name{font-weight:700;font-size:15px;letter-spacing:.04em;height:20px}
+  .name{font-weight:700;font-size:15px;letter-spacing:.04em;height:20px;display:flex;align-items:center;gap:8px}
   .chips{display:flex;gap:8px;max-width:100%;overflow-x:auto;padding:0 14px;scrollbar-width:none}
   .chips::-webkit-scrollbar,.car::-webkit-scrollbar{display:none}
   .chip{padding:7px 14px;border-radius:99px;background:#fff1;border:1px solid #fff2;font-size:13px;font-weight:600;white-space:nowrap}
   .chip.on{background:#fff;color:#000}
   .vib{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fffb;width:min(320px,80%)}
   input[type=range]{flex:1;accent-color:#fff;height:24px}
+
+  .shutter-btn{width:64px;height:64px;border-radius:50%;border:4px solid #fff;padding:4px;
+    display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:transform .15s ease,background .15s;
+    box-shadow:0 4px 20px rgba(0,0,0,0.5);margin:2px 0}
+  .shutter-btn:hover{transform:scale(1.06)}
+  .shutter-btn:active{transform:scale(0.92);background:rgba(255,255,255,0.4)}
+  .shutter-inner{width:100%;height:100%;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(255,255,255,0.4)}
+
   .car{position:relative;width:100%;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
-    padding:12px calc(50% - var(--sz)/2) 14px}
+    padding:10px calc(50% - var(--sz)/2) 12px}
   .it{flex:none;width:var(--sz);height:var(--sz);border-radius:50%;scroll-snap-align:center;border:3px solid #fff6;
-    transition:transform .2s,border-color .2s;display:grid;place-items:center;transform:scale(.8)}
+    transition:transform .2s,border-color .2s;display:grid;place-items:center;transform:scale(.8);position:relative}
   .it.on{transform:scale(1.2);border:4px solid #fff;box-shadow:0 0 0 3px #0006,0 0 22px #fff5}
   .it.none{background:#222}
   .it.none::after{content:"";width:60%;height:3px;background:#f55;transform:rotate(45deg);border-radius:2px}
-  .hint{font-size:11px;color:#fff9;margin-top:-6px;padding:0 16px;text-align:center}
+  .it.custom-it{background:conic-gradient(from 0deg,#ff3d81,#ffb347,#4cd964,#19d3ff,#a259ff,#ff3d81)}
+  .it.custom-it .custom-plus{font-size:22px;font-weight:900;color:#fff;text-shadow:0 1px 4px #000}
+  .hint{font-size:11px;color:#fff9;margin-top:-4px;padding:0 16px;text-align:center}
+
   .toast{position:fixed;left:50%;bottom:calc(240px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:#000e;border:1px solid #fff3;
-    padding:10px 18px;border-radius:16px;font-size:13px;opacity:0;transition:.3s;z-index:30;pointer-events:none;width:max-content;max-width:90%;text-align:center}
+    padding:10px 18px;border-radius:16px;font-size:13px;opacity:0;transition:.3s;z-index:30;pointer-events:none;width:max-content;max-width:90%;text-align:center;backdrop-filter:blur(10px)}
   .toast.on{opacity:1;transform:translate(-50%,0)}
   .flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:40}
   .flash.on{animation:fl .35s}
   @keyframes fl{from{opacity:.85}to{opacity:0}}
-  @media(max-height:560px){:root{--sz:46px}.dock{gap:4px;padding-top:20px}.hint,.vib{display:none}.toast{bottom:150px}.welcome{padding-bottom:110px}}
+
+  .drag-overlay{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;opacity:0;pointer-events:none;transition:opacity .2s;
+    border:3px dashed #19d3ff}
+  .drag-overlay.on{opacity:1;pointer-events:auto}
+  .drag-overlay svg{width:56px;height:56px;color:#19d3ff}
+  .drag-overlay span{font-size:18px;font-weight:700;color:#fff}
+
+  @media(max-height:560px){:root{--sz:46px}.dock{gap:4px;padding-top:14px}.hint,.vib{display:none}.toast{bottom:150px}.welcome{padding-bottom:110px}.shutter-btn{width:50px;height:50px}}
   @media(min-width:900px){:root{--sz:72px}}
 </style>
 </head>
@@ -100,8 +121,11 @@
   <div class="stage" id="stage">
     <div class="frame" id="frame">
       <canvas id="cv"></canvas>
-      <div class="cmp" id="cmp"><div class="line"></div><div class="knob"><svg viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M15 7l5 5-5 5"/></svg></div>
-        <span class="tag l">Before</span><span class="tag r">After</span></div>
+      <div class="cmp" id="cmp" role="slider" aria-label="Comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
+        <div class="line"></div>
+        <div class="knob"><svg viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M15 7l5 5-5 5"/></svg></div>
+        <span class="tag l">Before</span><span class="tag r">After</span>
+      </div>
     </div>
     <div class="welcome" id="welcome">
       <h2>Lustra</h2>
@@ -130,13 +154,19 @@
     <div class="name" id="name"></div>
     <div class="chips" id="chips"></div>
     <label class="vib">Intensity<input type="range" id="vib" min="20" max="100" value="85" aria-label="Color intensity" /></label>
+    <button class="shutter-btn" id="shutterBtn" aria-label="Take Photo" title="Take photo" hidden><div class="shutter-inner"></div></button>
     <div class="car" id="car"></div>
     <div class="hint" id="hint"></div>
   </div>
 </div>
 <video id="video" playsinline muted style="display:none"></video>
 <input type="file" id="file" accept="image/*" hidden />
+<input type="color" id="customColorInput" value="#a259ff" style="position:absolute;width:0;height:0;opacity:0;pointer-events:none" />
 <div class="toast" id="toast" role="status"></div><div class="flash" id="flash"></div>
+<div class="drag-overlay" id="dragOverlay">
+  <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+  <span>Drop photo to try hair colors</span>
+</div>
 
 <script type="module">
 import { ImageSegmenter, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.32/vision_bundle.mjs";
@@ -183,6 +213,7 @@ const LOOKS = [
   { n: "Platinum", s: ["#d5dae4"], st: "solid" },
   { n: "Silver", s: ["#b9c0cc"], st: "solid" },
   { n: "Snow White", s: ["#f5f7fb"], st: "solid" },
+  { n: "Custom", s: ["#a259ff"], st: "solid", custom: true }
 ];
 const hex = c => [1, 3, 5].map(i => parseInt(c.substr(i, 2), 16));
 const mix = (c, t, a) => "#" + hex(c).map(v => Math.round(v + (t - v) * a).toString(16).padStart(2, "0")).join("");
@@ -192,6 +223,7 @@ const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
 /* ---------- state ---------- */
 let seg = null, segMode = "VIDEO", mode = null, facing = "user", mirror = true, stream = null, busy = false;
+let animId = null, lastSegTime = 0;
 const START = LOOKS.findIndex(l => l.n === "Rose Gold");
 let look = LOOKS[START], style = look.st, vib = .85, compare = false, split = .5;
 let W = 0, H = 0, dyed = false, hairImg = null, prev = null, lastT = -1;
@@ -210,11 +242,15 @@ function setSize(w, h) {
   maskImg.data.fill(255);
   prev = null; bb.ok = false; fit();
 }
-function fit() {                     // camera fills the screen like Snapchat; photos and comparisons are shown in full
-  if (!W) return;
+
+/* Fix camera zoom bug: fit camera/photo completely inside stage so full hair is visible without crop/zoom */
+function fit() {
+  if (!W || !H) return;
   const r = stage.getBoundingClientRect();
-  const k = (mode === "camera" && !compare) ? Math.max(r.width / W, r.height / H) : Math.min(r.width / W, r.height / H);
-  frame.style.width = W * k + "px"; frame.style.height = H * k + "px";
+  if (!r.width || !r.height) return;
+  const k = Math.min(r.width / W, r.height / H);
+  frame.style.width = Math.round(W * k) + "px";
+  frame.style.height = Math.round(H * k) + "px";
 }
 addEventListener("resize", fit);
 
@@ -229,7 +265,13 @@ function makeFill(c, st, b) {
   }
   const g = c.createLinearGradient(b.x0, 0, b.x1 + 1, 0);
   if (style === "split") {
-    g.addColorStop(0, st[0]); g.addColorStop(.499, st[0]); g.addColorStop(.501, st[n - 1]); g.addColorStop(1, st[n - 1]);
+    // When mirrored (front camera), invert stops so left/right colors match physical orientation and saved photo
+    const leftCol = mirror ? st[n - 1] : st[0];
+    const rightCol = mirror ? st[0] : st[n - 1];
+    g.addColorStop(0, leftCol);
+    g.addColorStop(.499, leftCol);
+    g.addColorStop(.501, rightCol);
+    g.addColorStop(1, rightCol);
   } else {
     const B = 18;
     for (let k = 0; k < B; k++) { const col = st[k % n]; g.addColorStop(k / B, col); g.addColorStop((k + 1) / B - .001, col); }
@@ -297,19 +339,28 @@ function repaint() {
   if (mode === "photo") { if (look.s && hairImg) dye(hairImg, false); else dyed = false; present(); }
 }
 
-/* ---------- camera ---------- */
+/* ---------- camera lifecycle & loop cancellation fix ---------- */
 function stopCam() {
-  if (stream) stream.getTracks().forEach(t => t.stop());
-  stream = null; video.srcObject = null;
+  if (animId) {
+    cancelAnimationFrame(animId);
+    animId = null;
+  }
+  if (stream) {
+    stream.getTracks().forEach(t => t.stop());
+    stream = null;
+  }
+  video.srcObject = null;
 }
 async function setSeg(m) { if (segMode !== m) { await seg.setOptions({ runningMode: m }); segMode = m; } }
+
 function ui() {
   const cam = mode === "camera", photo = mode === "photo";
   document.body.classList.toggle("ready", !!mode);
   $("welcome").hidden = !!mode;
   $("flipBtn").hidden = !cam; $("backBtn").hidden = !photo; $("saveBtn").hidden = !photo; $("cmpBtn").hidden = !mode;
+  $("shutterBtn").hidden = !cam;
   $("hint").textContent = photo ? "Try other shades, drag the slider to compare, then tap the download icon to save."
-    : "Swipe to choose a shade · tap the center circle to take a photo";
+    : "Choose a shade and tap the shutter button to capture";
   fit();
 }
 
@@ -324,37 +375,52 @@ async function startCam() {
     video.srcObject = stream;
     await video.play();
     await setSeg("VIDEO");
-    mode = "camera"; mirror = facing === "user"; hairImg = null; dyed = false; lastT = -1;
+    mode = "camera"; mirror = facing === "user"; hairImg = null; dyed = false; lastT = -1; lastSegTime = 0;
     compare = false; $("cmp").classList.remove("on"); $("cmpBtn").classList.remove("on");
-    ui(); loop();
+    ui();
+    if (animId) cancelAnimationFrame(animId);
+    animId = requestAnimationFrame(loop);
   } catch (e) {
     console.error(e);
     toast("We couldn't open the camera. Please allow camera access, or upload a photo instead.");
   }
   busy = false;
 }
+
 function loop() {
-  if (mode !== "camera") return;
-  requestAnimationFrame(loop);
+  if (mode !== "camera" || !stream) {
+    animId = null;
+    return;
+  }
+  animId = requestAnimationFrame(loop);
   if (video.readyState < 2 || video.currentTime === lastT || !video.videoWidth) return;
   lastT = video.currentTime;
   const sc = Math.min(1, CAM_MAX / Math.max(video.videoWidth, video.videoHeight));
   setSize(Math.round(video.videoWidth * sc), Math.round(video.videoHeight * sc));
   sx.drawImage(video, 0, 0, W, H);
   dyed = false;
-  if (look.s) {
-    seg.segmentForVideo(srcC, performance.now(), r => {
-      const m = r.confidenceMasks && r.confidenceMasks[1];
-      if (!m) return;
-      const a = m.getAsFloat32Array();
-      if (!prev || prev.length !== a.length) prev = new Float32Array(a);
-      else for (let i = 0; i < a.length; i++) prev[i] += (a[i] - prev[i]) * .5;
-      dye(prev, true);
-    });
+  if (look.s && seg) {
+    // MediaPipe requires strictly increasing timestamps
+    const now = performance.now();
+    const ts = Math.max(lastSegTime + 1, now);
+    lastSegTime = ts;
+    try {
+      seg.segmentForVideo(srcC, ts, r => {
+        const m = r.confidenceMasks && r.confidenceMasks[1];
+        if (!m) return;
+        const a = m.getAsFloat32Array();
+        if (!prev || prev.length !== a.length) prev = new Float32Array(a);
+        else for (let i = 0; i < a.length; i++) prev[i] += (a[i] - prev[i]) * .5;
+        dye(prev, true);
+      });
+    } catch (err) {
+      console.warn("segmentForVideo warning:", err);
+    }
   }
   present();
 }
-document.addEventListener("visibilitychange", () => {   // release the camera when the tab is hidden
+
+document.addEventListener("visibilitychange", () => {
   if (mode !== "camera") return;
   if (document.hidden) stopCam(); else startCam();
 });
@@ -367,8 +433,16 @@ async function analyse() {
     const m = r.confidenceMasks && r.confidenceMasks[1];
     if (m) hairImg = new Float32Array(m.getAsFloat32Array());
   });
-  if (!hairImg || !hairImg.some(v => v > .5)) toast("We couldn't find any hair. Try a clearer, front-facing photo.");
+  // Hair dye triggers starting at c > 0.25; check if meaningful hair pixels exist
+  let hairCount = 0;
+  if (hairImg) {
+    for (let i = 0; i < hairImg.length; i++) {
+      if (hairImg[i] > 0.25) hairCount++;
+    }
+  }
+  if (hairCount < 50) toast("We couldn't detect hair clearly. Try a clearer photo with good lighting.");
 }
+
 async function capture() {
   if (mode !== "camera" || !W || busy) return;
   busy = true;
@@ -378,65 +452,133 @@ async function capture() {
   ui(); repaint();
   busy = false;
 }
+
 async function loadFile(f) {
   if (!f || !f.type.startsWith("image/") || !seg) return;
+  toast("Analyzing photo…");
   const url = URL.createObjectURL(f), img = new Image();
   img.src = url;
-  try { await img.decode(); } catch { toast("We couldn't read that image. Please try a JPG or PNG."); return; }
-  stopCam(); mode = "photo"; mirror = false; dyed = false;
-  const sc = Math.min(1, IMG_MAX / Math.max(img.naturalWidth, img.naturalHeight));
-  W = 0; setSize(Math.round(img.naturalWidth * sc), Math.round(img.naturalHeight * sc));
-  sx.drawImage(img, 0, 0, W, H);
-  URL.revokeObjectURL(url);
-  await analyse();
-  setCompare(true); ui(); repaint();
+  try {
+    await img.decode();
+    stopCam(); mode = "photo"; mirror = false; dyed = false;
+    const sc = Math.min(1, IMG_MAX / Math.max(img.naturalWidth, img.naturalHeight));
+    W = 0; setSize(Math.round(img.naturalWidth * sc), Math.round(img.naturalHeight * sc));
+    sx.drawImage(img, 0, 0, W, H);
+    await analyse();
+    compare = false; $("cmp").classList.remove("on"); $("cmpBtn").classList.remove("on");
+    ui(); repaint();
+  } catch (err) {
+    console.error(err);
+    toast("We couldn't read that image. Please try a JPG or PNG.");
+  } finally {
+    URL.revokeObjectURL(url);
+  }
 }
+
 async function save() {
   if (mode !== "photo" || !W) return;
   const [c, x] = mk(); c.width = W; c.height = H;
   present(x, false);
   const blob = await new Promise(r => c.toBlob(r, "image/png"));
-  const file = new File([blob], "lustra-" + Date.now() + ".png", { type: "image/png" });
-  if (coarse && navigator.canShare && navigator.canShare({ files: [file] })) {   // phones: opens the share sheet (Save Image)
-    try { await navigator.share({ files: [file] }); return; } catch (e) { if (e.name === "AbortError") return; }
+  const fileName = "lustra-" + Date.now() + ".png";
+  const file = new File([blob], fileName, { type: "image/png" });
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], title: "Lustra Hair Color Studio" });
+      toast("Photo shared!");
+      return;
+    } catch (e) {
+      if (e.name === "AbortError") return;
+    }
   }
-  const a = document.createElement("a"); a.href = URL.createObjectURL(file); a.download = file.name; a.click();
+
+  // Cross-browser download fallback
+  const blobUrl = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = blobUrl;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
   toast("Your photo has been saved.");
 }
 
-/* ---------- UI ---------- */
+/* ---------- UI & comparison slider ---------- */
 let tt;
 function toast(m) { const t = $("toast"); t.textContent = m; t.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("on"), 3200); }
 function flash() { const f = $("flash"); f.classList.remove("on"); void f.offsetWidth; f.classList.add("on"); }
 function setCompare(v) { compare = v; $("cmp").classList.toggle("on", v); $("cmpBtn").classList.toggle("on", v); fit(); if (mode === "photo") present(); }
-function setSplit(f) { split = clamp(f, .02, .98); frame.style.setProperty("--x", split * 100 + "%"); if (mode === "photo") present(); }
+function setSplit(f) {
+  split = clamp(f, .02, .98);
+  frame.style.setProperty("--x", (split * 100).toFixed(1) + "%");
+  $("cmp").setAttribute("aria-valuenow", Math.round(split * 100));
+  if (mode === "photo") present();
+}
+
+function syncHash() {
+  if (!look) return;
+  const slug = look.n.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const params = new URLSearchParams();
+  params.set("shade", slug);
+  if (style) params.set("style", style);
+  params.set("vib", Math.round(vib * 100));
+  if (look.custom && look.s) params.set("color", look.s[0]);
+  history.replaceState(null, "", "#" + params.toString());
+}
 
 const car = $("car"), items = [];
+const colorInput = $("customColorInput");
+
 LOOKS.forEach((l, i) => {
   const b = document.createElement("button");
-  b.className = "it" + (l.s ? "" : " none");
-  if (l.s) b.style.background = l.s.length > 1 ? `linear-gradient(160deg,${l.s.join(",")})` : l.s[0];
+  b.className = "it" + (l.s ? "" : " none") + (l.custom ? " custom-it" : "");
+  if (l.custom) {
+    b.innerHTML = '<span class="custom-plus">+</span>';
+  } else if (l.s) {
+    b.style.background = l.s.length > 1 ? `linear-gradient(160deg,${l.s.join(",")})` : l.s[0];
+  }
   b.setAttribute("aria-label", l.n);
   b.onclick = () => {
-    if (LOOKS[i] !== look) return center(i, true);
-    if (mode === "camera") capture(); else if (!mode) toast("Start the camera or upload a photo first.");
+    if (l.custom && look === l) {
+      colorInput.click();
+      return;
+    }
+    pick(i);
+    center(i, true);
+    if (l.custom) colorInput.click();
   };
   car.appendChild(b); items.push(b);
 });
+
+colorInput.addEventListener("input", e => {
+  const customLook = LOOKS.find(l => l.custom);
+  if (customLook) {
+    customLook.s = [e.target.value];
+    if (look === customLook) {
+      repaint();
+      syncHash();
+    }
+  }
+});
+
 const center = (i, smooth) => car.scrollTo({ left: items[i].offsetLeft + items[i].offsetWidth / 2 - car.clientWidth / 2, behavior: smooth ? "smooth" : "auto" });
 function pick(i) {
   look = LOOKS[i];
   if (look.s) style = look.st;
   items.forEach((b, k) => b.classList.toggle("on", k === i));
-  $("name").textContent = look.n;
-  renderChips(); repaint();
+  $("name").textContent = look.custom ? "Custom Shade" : look.n;
+  renderChips(); repaint(); syncHash();
 }
+
 car.addEventListener("scroll", () => {
   const step = items[1].offsetLeft - items[0].offsetLeft;
   const c = car.scrollLeft + car.clientWidth / 2 - (items[0].offsetLeft + items[0].offsetWidth / 2);
   const i = clamp(Math.round(c / step), 0, items.length - 1);
   if (LOOKS[i] !== look) pick(i);
 }, { passive: true });
+
 car.addEventListener("wheel", e => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { car.scrollLeft += e.deltaY; e.preventDefault(); } }, { passive: false });
 addEventListener("keydown", e => {
   const i = LOOKS.indexOf(look);
@@ -450,30 +592,90 @@ function renderChips() {
   Object.entries(STYLES).forEach(([k, n]) => {
     const b = document.createElement("button");
     b.className = "chip" + (k === style ? " on" : ""); b.textContent = n;
-    b.onclick = () => { style = k; renderChips(); repaint(); };
+    b.onclick = () => { style = k; renderChips(); repaint(); syncHash(); };
     box.appendChild(b);
   });
 }
-$("vib").oninput = e => { vib = e.target.value / 100; repaint(); };
+$("vib").oninput = e => { vib = e.target.value / 100; repaint(); syncHash(); };
 
 $("camBtn").onclick = startCam;
 $("backBtn").onclick = startCam;
 $("saveBtn").onclick = save;
 $("flipBtn").onclick = () => { facing = facing === "user" ? "environment" : "user"; startCam(); };
 $("cmpBtn").onclick = () => setCompare(!compare);
+$("shutterBtn").onclick = capture;
+
 const file = $("file");
 $("upBtn").onclick = $("upBtn2").onclick = () => file.click();
 file.onchange = () => { loadFile(file.files[0]); file.value = ""; };
-addEventListener("dragover", e => e.preventDefault());
-addEventListener("drop", e => { e.preventDefault(); loadFile(e.dataTransfer.files[0]); });
 
+// Drag and drop with visual overlay
+const dragOverlay = $("dragOverlay");
+let dragDepth = 0;
+addEventListener("dragenter", e => { e.preventDefault(); dragDepth++; dragOverlay.classList.add("on"); });
+addEventListener("dragover", e => { e.preventDefault(); });
+addEventListener("dragleave", e => { e.preventDefault(); dragDepth--; if (dragDepth <= 0) { dragDepth = 0; dragOverlay.classList.remove("on"); } });
+addEventListener("drop", e => {
+  e.preventDefault(); dragDepth = 0; dragOverlay.classList.remove("on");
+  if (e.dataTransfer.files && e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+});
+
+// Comparison slider with robust pointer capture & keyboard support
 const cmp = $("cmp");
-const move = e => { const r = frame.getBoundingClientRect(); setSplit((e.clientX - r.left) / r.width); };
-cmp.addEventListener("pointerdown", e => { cmp.setPointerCapture(e.pointerId); move(e); cmp.onpointermove = move; });
-cmp.addEventListener("pointerup", () => cmp.onpointermove = null);
+let activePointer = null;
+const moveCmp = e => {
+  const r = frame.getBoundingClientRect();
+  if (r.width > 0) setSplit((e.clientX - r.left) / r.width);
+};
+const endCmp = e => {
+  if (activePointer === e.pointerId) {
+    try { cmp.releasePointerCapture(e.pointerId); } catch {}
+    cmp.removeEventListener("pointermove", moveCmp);
+    cmp.removeEventListener("pointerup", endCmp);
+    cmp.removeEventListener("pointercancel", endCmp);
+    activePointer = null;
+  }
+};
+cmp.addEventListener("pointerdown", e => {
+  activePointer = e.pointerId;
+  try { cmp.setPointerCapture(e.pointerId); } catch {}
+  moveCmp(e);
+  cmp.addEventListener("pointermove", moveCmp);
+  cmp.addEventListener("pointerup", endCmp);
+  cmp.addEventListener("pointercancel", endCmp);
+});
+cmp.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") { setSplit(split - 0.05); e.preventDefault(); }
+  if (e.key === "ArrowRight") { setSplit(split + 0.05); e.preventDefault(); }
+});
 
 if (FEEDBACK_URL) { $("fbLink").href = FEEDBACK_URL; $("fb").hidden = false; }
-pick(START); ui(); requestAnimationFrame(() => center(START, false));
+
+// Hash parameter restore
+try {
+  if (location.hash) {
+    const params = new URLSearchParams(location.hash.slice(1));
+    const shadeParam = params.get("shade");
+    const styleParam = params.get("style");
+    const vibParam = params.get("vib");
+    const colorParam = params.get("color");
+    if (shadeParam) {
+      const idx = LOOKS.findIndex(l => l.n.toLowerCase().replace(/[^a-z0-9]+/g, "-") === shadeParam);
+      if (idx !== -1) {
+        look = LOOKS[idx];
+        if (look.custom && colorParam) look.s = [colorParam];
+      }
+    }
+    if (styleParam && STYLES[styleParam]) style = styleParam;
+    if (vibParam) {
+      const v = parseInt(vibParam, 10);
+      if (!isNaN(v) && v >= 20 && v <= 100) { vib = v / 100; $("vib").value = v; }
+    }
+  }
+} catch {}
+
+const initialIndex = LOOKS.indexOf(look) !== -1 ? LOOKS.indexOf(look) : START;
+pick(initialIndex); ui(); requestAnimationFrame(() => center(initialIndex, false));
 
 /* ---------- model ---------- */
 let vision;
